@@ -1,29 +1,31 @@
+html{
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: rgb(231, 231, 231);
     margin: 0;
-}
-
-main {
-    padding: 2vh;
-}
-
-.container{
-    width: 100%;
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    grid-template-rows: 70px 1fr;
+    grid-template-areas:
+        "header header"
+        "nav main";
+    min-height: 100vh;
 }
 
 /* HEADER */
 
 header{
+    grid-area: header;
     color:white;
     display: flex;
     justify-content: space-between;
     background-color: #000080;
     padding-left: 2vh;
     align-items: center;
-    height: 6.5vh;
+    height: 70px;
     box-shadow: 0 5px 10px rgba(0,0,0,0.15), 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
@@ -46,20 +48,51 @@ header h1{
     background-color: #0000c9;
 }
 
+/* NAV */
 
-/* MAIN-FEED */
+nav {
+    grid-area: nav;
+    background-color: #3b3b3b;
+    height: 100%;
+}
 
-.main-feed{
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav li a {
+    display: block;
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+nav li a:hover {
+    background-color: #2a2a2a;
+}
+
+/* MAIN */
+
+main{
+    grid-area: main;
+    padding: 40px;
+    overflow-y: auto;
+
     display: flex;
-    justify-content: flex-end;
-    padding: 2vh;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
 }
 
 /* CARD-ABOUT */
 
 .card-about{
     background-color: white;
-    width: 60%;
+    margin: 0 auto;
+    width: 70%;
     height: min-content;
     border-radius: 30px;
     display: flex;
