@@ -35,7 +35,7 @@ header{
 
 /* CARD-ABOUT */
 
-#card-about{
+.card-about{
     background-color: white;
     width: 60%;
     height: min-content;
@@ -46,7 +46,7 @@ header{
     box-shadow: 0 0 10px rgba(0,0,0,0.15), 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
-#card-about-text{
+.card-about__text{
     display: flex;
     flex-direction: column;
     font-size: 20px;
@@ -57,12 +57,12 @@ header{
     border-radius: 30px 0 0 30px;
 }
 
-#card-about-title span{
+.card-about__title span{
     font-size: 5vh;
     font-weight: bold;
     color: #000080;
 }
 
-#card-about-title{
+.card-about__title{
     font-size: 3vh;
 }
