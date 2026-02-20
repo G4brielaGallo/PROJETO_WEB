@@ -2,6 +2,110 @@
  <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="stylesheet.css">
+
+	<script>
+		// DATA DE NASCIMENTO
+		const nascimento = new Date(2008, 9, 14, 8, 30, 0); 
+		// mês é 9 porque começa do 0 (outubro = 9)
+
+		// CONTADOR EM TEMPO REAL
+		function atualizarContador() {
+    		const agora = new Date();
+    		const diff = agora - nascimento;
+
+    		const segundos = Math.floor(diff / 1000) % 60;
+    		const minutos = Math.floor(diff / (1000 * 60)) % 60;
+    		const horas = Math.floor(diff / (1000 * 60 * 60)) % 24;
+    		const dias = Math.floor(diff / (1000 * 60 * 60 * 24)) % 30;
+    		const meses = Math.floor(diff / (1000 * 60 * 60 * 24 * 30)) % 12;
+    		const anos = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+
+    		document.getElementById("contador").innerText =
+        		`Eu tenho ${anos} anos, ${meses} meses, ${dias} dias, ${horas}h ${minutos}m ${segundos}s`;
+		}
+
+		setInterval(atualizarContador, 1000);
+
+		// BASE DE DADOS DAS FOTOS
+		const fotos = [
+    		{
+    		    data: new Date(2009, 9, 25),
+    	    	src: "img/eu 25-10-2009.JPG"
+    		},
+    		{
+    		    data: new Date(2009, 10, 2),
+    		    src: "img/eu 02-11-2009.JPG"
+    		},
+    		{
+    		    data: new Date(2009, 11, 20),
+    		    src: "img/eu 20-12-2009.JPG"
+    		},
+			{
+				data: new Date(2009, 10, 30),
+				src: "img/eu 30-11-2009.JPG"
+			},
+			{
+				data: new Date(2010, 0, 1),
+				src: "img/eu 01-01-2010.JPG"
+			},
+			{
+				data: new Date(2010, 0, 25),
+				src: "img/eu 25-01-2010.JPG"
+			},
+			{
+				data: new Date(2010, 1, 15),
+				src: "img/eu 15-02-2010.JPG"
+			},
+			{
+				data: new Date(2010, 1, 16),
+				src: "img/eu 16-02-2010.JPG"
+			},
+			{
+				data: new Date(2010, 1, 22),
+				src: "img/eu 22-02-2010.JPG"
+			},
+			{
+				data: new Date(2010, 2, 4),
+				src: "img/eu 04-03-2010.JPG"
+			},
+			{
+				data: new Date(2010, 3, 4),
+				src: "img/eu 04-04-2010.JPG"
+			}
+		];
+
+		// FUNÇÃO PARA BUSCAR FOTO
+		function buscarImagem(){
+    		const input = document.getElementById("tempoInput").value;
+    		const partes = input.split(":");
+
+    		if(partes.length !== 3){
+        		alert("Use o formato: anos:meses:dias");
+        		return;
+    		}
+
+    		const [anos, meses, dias] = partes.map(Number);
+
+    		const dataDigitada = new Date(nascimento);
+    		dataDigitada.setFullYear(dataDigitada.getFullYear() + anos);
+    		dataDigitada.setMonth(dataDigitada.getMonth() + meses);
+    		dataDigitada.setDate(dataDigitada.getDate() + dias);
+
+    		let fotoMaisProxima = fotos[0];
+    		let menorDiferenca = Math.abs(dataDigitada - fotos[0].data);
+
+    		for(let i = 1; i < fotos.length; i++){
+        		const diferenca = Math.abs(dataDigitada - fotos[i].data);
+
+        		if(diferenca < menorDiferenca){
+            		menorDiferenca = diferenca;
+            		fotoMaisProxima = fotos[i];
+        		}
+    		}
+
+    		document.querySelector(".card-about--birth .card-about__img").src = fotoMaisProxima.src;
+		}
+	</script>
  </head>
 
  <body>
@@ -27,9 +131,20 @@
 				</div>
 			</div>
 		</section>
+		
 		<section id="historia">
+			<div class="card-about--birth">
+				<img src="img/eu 25-10-2009.JPG" alt="A Picture of Me When I Was (age)" class="card-about__img">
+				<div class="life-counter">
+    				<h2 id="contador"></h2>
+
+    				<input type="text" id="tempoInput" placeholder="anos:meses:dias (AA:MM:DD)">
+    				<button onclick="buscarImagem()">Buscar Foto</button>
+				</div>
+			</div>
+
 			<div class="card-about">
-				<img src="img/ft_principal.png" alt="A Picture of Me" id="img-principal">
+				<img src="img/ft_principal.png" alt="A Picture of Me" class="card-about__img">
 				<div class="card-about__text">
 					<p class="card-about__title">Eu sou a <span>Gabriela Gallo</span></p>
 					<p>Sou aluna do 3° Ano do Ensino Médio integrado com o Ensino Técnico em Desenvolvimento de Sistemas na ETEC Profª Ilza Nascimento Pintus.</p>
@@ -37,9 +152,10 @@
 				</div>
 			</div>
 		</section>
+
 		<section id="hobbies">
 			<div class="card-about">
-				<img src="img/ft_principal.png" alt="A Picture of Me" id="img-principal">
+				<img src="img/ft_principal.png" alt="A Picture of Me" class="card-about__img">
 				<div class="card-about__text">
 					<p class="card-about__title">Eu sou a <span>Gabriela Gallo</span></p>
 					<p>Sou aluna do 3° Ano do Ensino Médio integrado com o Ensino Técnico em Desenvolvimento de Sistemas na ETEC Profª Ilza Nascimento Pintus.</p>
