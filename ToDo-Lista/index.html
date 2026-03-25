@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" 
+    <title>Lista de Tarefas</title>
+</head>
+<body>
+    <p id="titulo">Lista de Tarefas</p>
+    
+    <div class="card-form">
+        <label class="label">Digite a tarefa:</label>
+            <input type="text" id="inputTarefa" placeholder="Nome da tarefa...">
+
+        <label class="label">Digite o prazo:</label>
+        <input type="date" id="inputData">
+
+        <label class="label">Digite a descrição</label>
+        <input type="text" id="inputDesc" placeholder="Descrição da tarefa...">
+
+        <button id="botaoAdicionarTarefa" onclick="adicionarTarefa()">Adicionar</button>
+    </div>
+
+    <p id="listaTitulo">TAREFAS</p>
+    <p id="tarefasContador">Total de tarefas: 0</p>
+    <div class="tarefasLista">
+
+    </div>
+
+    <script>
+        let hoje = new Date().toISOString().split("T")[0]
+        let cont = 0;
+
+        function adicionarContador() {
+            cont++;
+        }
+
+        function atualizarContador() {
+            document.getElementById("tarefasContador").innerHTML = "Total de tarefas: " + cont;
+        }
+
+        function adicionarTarefa() {
+            //Pega o valor digitado nos inputs
+            let tarefa = document.getElementById("inputTarefa").value;
+            let data = document.getElementById("inputData").value;
+            let texto = document.getElementById("inputDesc").value;
+
+            //Verifica se os valores são válidos
+            if (tarefa == "" || data == "" || texto == ""){
+                alert("Algum dos campos ficou em branco, por favor o preencha e tente adicionar a tarefa novamente!");
+                return;
+            }
+
+            if (texto.trim().length < 3){
+                alert("A sua descrição tem menos de 3 caracteres, por favor digite 3 ou mais caracteres no campo descrição e tente adicionar a tarefa novamente!");
+                return;
+            }
+
+            if (hoje > data){
+                alert("A data digitada antecede a " + hoje + ", digite a data de hoje ou a de um dia posterior!");
+                return;
+            }
+
+            //Cria os elementos
+            let divTarefa = document.createElement("div");
+
+            let novaTarefa = document.createElement("p");
+            novaTarefa.innerHTML = tarefa;
+
+            let botaoRemover = document.createElement("button");
+            botaoRemover.innerHTML = "Remover";
+            botaoRemover.onclick = function removerTarefa() {
+                divTarefa.remove();
+                cont--;
+                atualizarContador();
+            }
+
+            let botaoConcluir = document.createElement("button");
+            botaoConcluir.innerHTML = "Concluir";
+            botaoConcluir.onclick = function concluirTarefa() {
+                divTarefa.style.backgroundColor = "#6fbd7b";
+            }
+
+            let novaData = document.createElement("p");
+            novaData.innerHTML = data;
+
+            let novoTexto = document.createElement("p");
+            novoTexto.innerHTML = texto;
+
+            tarefasLista.appendChild(divTarefa);
+
+            divTarefa.appendChild(novaTarefa);
+            divTarefa.appendChild(novaData);
+            divTarefa.appendChild(novoTexto);
+            divTarefa.appendChild(botaoRemover);
+            divTarefa.appendChild(botaoConcluir);
+
+            //Realiza a contagem de tarefas
+            adicionarContador();
+            atualizarContador();
+        }
+    </script>
+</body>
+</html>
