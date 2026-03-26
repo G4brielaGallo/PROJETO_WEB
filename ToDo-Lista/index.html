@@ -44,6 +44,12 @@
             document.getElementById("tarefasContador").innerHTML = "Total de tarefas: " + cont;
         }
 
+        function limparInputs() {
+            document.getElementById("inputTarefa").value = "";
+            document.getElementById("inputData").value = "";
+            document.getElementById("inputDesc").value = "";
+        }
+
         function adicionarTarefa() {
             //Pega o valor digitado nos inputs
             let tarefa = document.getElementById("inputTarefa").value;
@@ -127,6 +133,9 @@
             //Realiza a contagem de tarefas
             adicionarContador();
             atualizarContador();
+
+            //Limpa os inputs
+            limparInputs();
         }
     </script>
 </body>
