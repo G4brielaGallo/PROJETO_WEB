@@ -3,29 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" 
+    <link rel="stylesheet" href="stylesheet.css">
     <title>Lista de Tarefas</title>
 </head>
 <body>
-    <p id="titulo">Lista de Tarefas</p>
+    <div class="container">
+        <p id="titulo">Lista de Tarefas</p>
     
-    <div class="card-form">
-        <label class="label">Digite a tarefa:</label>
+        <div class="card-form">
+            <label class="label">Digite a tarefa:</label>
             <input type="text" id="inputTarefa" placeholder="Nome da tarefa...">
 
-        <label class="label">Digite o prazo:</label>
-        <input type="date" id="inputData">
+            <label class="label">Digite o prazo:</label>
+            <input type="date" id="inputData">
 
-        <label class="label">Digite a descrição</label>
-        <input type="text" id="inputDesc" placeholder="Descrição da tarefa...">
+            <label class="label">Digite a descrição</label>
+            <input type="text" id="inputDesc" placeholder="Descrição da tarefa...">
 
-        <button id="botaoAdicionarTarefa" onclick="adicionarTarefa()">Adicionar</button>
-    </div>
+            <button id="botaoAdicionarTarefa" onclick="adicionarTarefa()">ADICIONAR</button>
+        </div>
 
-    <p id="listaTitulo">TAREFAS</p>
-    <p id="tarefasContador">Total de tarefas: 0</p>
-    <div class="tarefasLista">
+        <div class="tarefasHeader">
+            <p id="listaTitulo">TAREFAS</p>
+            <p id="tarefasContador">Total de tarefas: 0</p>
+        </div>
 
+        <div class="tarefasLista">
+        </div>
     </div>
 
     <script>
@@ -64,12 +68,15 @@
 
             //Cria os elementos
             let divTarefa = document.createElement("div");
+            divTarefa.className = "cardTarefa";
 
-            let novaTarefa = document.createElement("p");
-            novaTarefa.innerHTML = tarefa;
+            let nomeTarefa = document.createElement("p");
+            nomeTarefa.innerHTML = tarefa;
+            nomeTarefa.className = "nomeTarefa"
 
             let botaoRemover = document.createElement("button");
-            botaoRemover.innerHTML = "Remover";
+            botaoRemover.innerHTML = "REMOVER";
+            botaoRemover.className = "btnRemover";
             botaoRemover.onclick = function removerTarefa() {
                 divTarefa.remove();
                 cont--;
@@ -77,24 +84,45 @@
             }
 
             let botaoConcluir = document.createElement("button");
-            botaoConcluir.innerHTML = "Concluir";
+            botaoConcluir.innerHTML = "CONCLUIR";
+            botaoConcluir.className = "btnConcluir";
             botaoConcluir.onclick = function concluirTarefa() {
-                divTarefa.style.backgroundColor = "#6fbd7b";
+                divTarefa.style.backgroundColor = "#0f0e0c";
+                nomeTarefa.style.textDecoration = "line-through"
+                botaoConcluir.disabled = true;
+                botaoReabrir.disabled = false;
             }
 
-            let novaData = document.createElement("p");
-            novaData.innerHTML = data;
+            let botaoReabrir = document.createElement("button");
+            botaoReabrir.innerHTML = "REABRIR";
+            botaoReabrir.className = "btnReabrir";
+            botaoReabrir.disabled = true;
+            botaoReabrir.onclick = function reabrirTarefa() {
+                divTarefa.style.backgroundColor = "#222018";
+                nomeTarefa.style.textDecoration = "none";
+                botaoConcluir.disabled = false;
+                botaoReabrir.disabled = true;
+            }
 
-            let novoTexto = document.createElement("p");
-            novoTexto.innerHTML = texto;
+            let dataTarefa = document.createElement("p");
+            dataTarefa.innerHTML = data;
+            dataTarefa.className = "dataTarefa"
+
+
+            let descTarefa = document.createElement("p");
+            descTarefa.innerHTML = texto;
+            descTarefa.className = "descTarefa"
+
+            let tarefasLista = document.querySelector(".tarefasLista");
 
             tarefasLista.appendChild(divTarefa);
 
-            divTarefa.appendChild(novaTarefa);
-            divTarefa.appendChild(novaData);
-            divTarefa.appendChild(novoTexto);
-            divTarefa.appendChild(botaoRemover);
+            divTarefa.appendChild(nomeTarefa);
+            divTarefa.appendChild(dataTarefa);
+            divTarefa.appendChild(descTarefa);
             divTarefa.appendChild(botaoConcluir);
+            divTarefa.appendChild(botaoRemover);
+            divTarefa.appendChild(botaoReabrir);
 
             //Realiza a contagem de tarefas
             adicionarContador();

@@ -1,0 +1,183 @@
+body{
+    background-color: #0f0e0c;
+    font-family: Tahoma,'Segoe UI', Verdana, sans-serif;
+    color: #f0ead8;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.container{
+    width: 100%;
+    max-width: 620px;
+}
+
+#titulo{
+    font-weight: bold;
+    font-size: xx-large;
+    color: #e8c96d;
+}
+
+.card-form{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    background: #1a1916;
+    border: 1px solid #33312a;
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 32px;
+}
+
+input{
+    background: #222018;;
+    border: 1px solid #33312a;;
+    border-radius: 6px;
+    color: #f0ead8;
+    font-size: 13px;
+    padding: 10px 14px;
+}
+
+#botaoAdicionarTarefa{
+    grid-column: 1 / -1;
+    margin-top: 4px;
+    background: #e8c96d;
+    color: #0f0e0c;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    padding: 12px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.25s;
+}
+
+#botaoAdicionarTarefa:hover{
+    background: #f5d87a;
+}
+
+#botaoAdicionarTarefa:active{
+    transform: scale(0.95);
+}
+
+.tarefasLista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cardTarefa {
+    background: #222018;
+    border: 1px solid #33312a;
+    border-radius: 10px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 12px;
+    align-items: center;
+}
+
+.nomeTarefa {
+    font-size: 14px;
+    font-weight: 500;
+    order: 1;
+}
+
+.descTarefa {
+    font-size: 12px;
+    border: 1px solid #7a7466;
+    margin-top: 6px;
+    line-height: 1.5;
+    grid-row: 2 / span 3;
+    grid-column: 1 / span 2;
+    height: 100%;
+    width: 95%;
+    padding: 2px 4px;
+}
+
+.dataTarefa {
+    font-size: 12px;
+    text-align: right;
+    color: #a9a188;
+    margin-top: 4px;
+    order: 2;
+}
+
+.btnRemover, .btnConcluir, .btnReabrir {
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s, visibility 0.2s;
+}
+
+.btnRemover {
+    border: 1px solid #d9614c;
+    color: #d9614c;
+    background: #222018;
+    order: 5;
+}
+
+.btnRemover:hover {
+    background: #d9614c;
+    color: #222018;
+}
+
+.btnConcluir {
+    border: 1px solid #6fbd7b;
+    color: #6fbd7b;
+    background: #222018;
+    order: 3;
+}
+
+.btnConcluir:hover:enabled {
+    background: #6fbd7b;
+    color: #222018;
+}
+
+.btnConcluir:disabled{
+    background: #00000000;
+    border-color:#33312a;
+    color:#33312a
+}
+
+.btnReabrir{
+    border: 1px solid #8b8b8b;
+    color: #8b8b8b;
+    background: #222018;
+    order: 6;
+}
+
+.btnReabrir:hover:enabled{
+    background: #8b8b8b;
+    color: #222018;
+}
+
+.btnReabrir:disabled{
+    visibility: hidden;
+}
+
+.btnReabrir:enabled{
+    visibility: visible;
+}
+
+.tarefasHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+#listaTitulo {
+    font-weight: bold;
+    font-size: 16px;
+    color: #e8c96d;
+}
+
+#tarefasContador {
+    font-size: 14px;
+    color: #f0ead8;
+}
