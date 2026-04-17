@@ -1,0 +1,123 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(48, 48, 48) !important;
+    color: white !important;
+}
+
+header {
+    margin: 20px;
+}
+
+.areaCarrinho {
+    position: sticky;
+    top: 20px;
+    border: 1px solid rgb(88, 88, 88);
+    border-radius: 8px;
+    height: fit-content;
+}
+
+.carrinho {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px;
+    max-height: 50vh;
+    overflow: auto;
+    align-items: stretch;
+}
+
+.areaPagamento {
+    background-color: rgb(88, 88, 88);
+    border-radius: 0px 0px 3px 3px;
+    padding: 10px;
+}
+
+.areaCompra {
+    border: 1px solid rgb(88, 88, 88);
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.areaFiltro {
+    padding: 10px;
+}
+
+#filtro {
+    width: 100%;
+    font-size: medium;
+    align-self: center;
+}
+
+#totalCompra {
+    font-size: 25px;
+}
+
+.cardLivro {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(38, 38, 38);
+    border-radius: 8px;
+    padding: 10px;
+    max-width: 100%;
+}
+
+.carrinho .cardLivro {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.tituloLivro {
+    font-weight: bold;
+    font-size: larger;
+    line-height: 1;
+    min-height: calc(1em * 2);
+}
+
+.btnAdicionarCarrinho,
+.btnPagar {
+    background-color: rgb(100, 149, 237);
+    color: rgb(0, 0, 0);
+    padding: 8px;
+    width: 100%;
+    font-size: small;
+    border: 1px solid black;
+    border-radius: 8px;
+    margin-top: auto;
+    transition: all 0.3s;
+}
+
+.btnAdicionarCarrinho:hover,
+.btnPagar:hover {
+    background-color: rgb(72, 106, 170);
+}
+
+.btnRemover {
+    background-color: rgb(220, 20, 60);
+    color: rgb(255, 255, 255);
+    padding: 5px;
+    width: 100%;
+    font-size: small;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 8px;
+    margin-top: auto;
+    transition: all 0.2s;
+}
+
+.btnRemover:hover {
+    background-color: rgb(163, 15, 44);
+}
+
+.btnAdicionarCarrinho:active,
+.btnPagar:active,
+.btnRemover:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 991px) {
+    .areaCarrinho {
+        position: static;
+    }
+}
