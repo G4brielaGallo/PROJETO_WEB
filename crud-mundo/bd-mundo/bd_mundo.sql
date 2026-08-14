@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS bd_mundo;
+-- DROP DATABASE IF EXISTS bd_mundo;
 CREATE DATABASE bd_mundo;
 USE bd_mundo;
 
