@@ -1,6 +1,8 @@
 <?php
 include '../config.php';
 
+$isAdmin = ($_SESSION['tipo'] ?? '') === 'A';
+
 $governantes = $pdo->query("SELECT * FROM Governantes ORDER BY nome")->fetchAll();
 ?>
 <!DOCTYPE html>
@@ -16,7 +18,9 @@ $governantes = $pdo->query("SELECT * FROM Governantes ORDER BY nome")->fetchAll(
         <h1>Lista de Governantes</h1>
         <div class="actions">
             <a href="../index.php" class="btn">Voltar</a>
+            <?php if ($isAdmin): ?>
             <a href="criar.php" class="btn btn-success">+ Novo Governante</a>
+            <?php endif; ?>
         </div>
         
         <table>
@@ -29,7 +33,9 @@ $governantes = $pdo->query("SELECT * FROM Governantes ORDER BY nome")->fetchAll(
                     <th>Idade</th>
                     <th>Início Mandato</th>
                     <th>Fim Mandato</th>
+                    <?php if ($isAdmin): ?>
                     <th>Ações</th>
+                    <?php endif; ?>
                 </tr>
             </thead>
             <tbody>
@@ -43,15 +49,17 @@ $governantes = $pdo->query("SELECT * FROM Governantes ORDER BY nome")->fetchAll(
                         <td><?= $g['idade'] ?> anos</td>
                         <td><?= date('d/m/Y', strtotime($g['dt_inicio_mandato'])) ?></td>
                         <td><?= date('d/m/Y', strtotime($g['dt_fim_mandato'])) ?></td>
+                        <?php if ($isAdmin): ?>
                         <td>
                             <a href="editar.php?id=<?= $g['pk_governante'] ?>" class="btn-edit">✏️</a>
                             <a href="excluir.php?id=<?= $g['pk_governante'] ?>" class="btn-delete" onclick="return confirmarExclusao('governante')">🗑️</a>
                         </td>
+                        <?php endif; ?>
                     </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="8" style="text-align: center;">Nenhum governante cadastrado</td>
+                        <td colspan="<?= $isAdmin ? 8 : 7 ?>" style="text-align: center;">Nenhum governante cadastrado</td>
                     </tr>
                 <?php endif; ?>
             </tbody>

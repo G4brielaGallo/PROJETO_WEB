@@ -1,6 +1,8 @@
 <?php
 include '../config.php';
 
+$isAdmin = ($_SESSION['tipo'] ?? '') === 'A';
+
 $continentes = $pdo->query("SELECT * FROM Continentes ORDER BY nome")->fetchAll();
 ?>
 <!DOCTYPE html>
@@ -16,7 +18,9 @@ $continentes = $pdo->query("SELECT * FROM Continentes ORDER BY nome")->fetchAll(
         <h1>Lista de Continentes</h1>
         <div class="actions">
             <a href="../index.php" class="btn">Voltar</a>
+            <?php if ($isAdmin): ?>
             <a href="criar.php" class="btn btn-success">+ Novo Continente</a>
+            <?php endif; ?>
         </div>
         
         <table>
@@ -27,7 +31,9 @@ $continentes = $pdo->query("SELECT * FROM Continentes ORDER BY nome")->fetchAll(
                     <th>População</th>
                     <th>Área (km²)</th>
                     <th>Total de Países</th>
+                    <?php if ($isAdmin): ?>
                     <th>Ações</th>
+                    <?php endif; ?>
                 </tr>
             </thead>
             <tbody>
@@ -39,15 +45,17 @@ $continentes = $pdo->query("SELECT * FROM Continentes ORDER BY nome")->fetchAll(
                         <td><?= number_format($c['populacao'], 0, ',', '.') ?></td>
                         <td><?= number_format($c['area'], 2, ',', '.') ?></td>
                         <td><?= $c['total_paises'] ?></td>
+                        <?php if ($isAdmin): ?>
                         <td>
                             <a href="editar.php?id=<?= $c['pk_continente'] ?>" class="btn-edit">✏️</a>
                             <a href="excluir.php?id=<?= $c['pk_continente'] ?>" class="btn-delete" onclick="return confirmarExclusao('continente')">🗑️</a>
                         </td>
+                        <?php endif; ?>
                     </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="6" style="text-align: center;">Nenhum continente cadastrado</td>
+                        <td colspan="<?= $isAdmin ? 6 : 5 ?>" style="text-align: center;">Nenhum continente cadastrado</td>
                     </tr>
                 <?php endif; ?>
             </tbody>

@@ -1,6 +1,8 @@
 <?php
 include '../config.php';
 
+$isAdmin = ($_SESSION['tipo'] ?? '') === 'A';
+
 // Buscar todos os países com seus continentes e governantes
 $stmt = $pdo->query("SELECT p.*, c.nome as continente, g.nome as governante 
                      FROM Paises p 
@@ -23,7 +25,9 @@ $paises = $stmt->fetchAll();
         
         <div class="actions">
             <a href="../index.php" class="btn">Voltar</a>
+            <?php if ($isAdmin): ?>
             <a href="criar.php" class="btn btn-success">+ Novo País</a>
+            <?php endif; ?>
         </div>
         
         <!-- Estatísticas rápidas -->
@@ -68,7 +72,9 @@ $paises = $stmt->fetchAll();
                     <th>Moeda</th>
                     <th>Continente</th>
                     <th>Governante</th>
+                    <?php if ($isAdmin): ?>
                     <th>Ações</th>
+                    <?php endif; ?>
                 </tr>
             </thead>
             <tbody>
@@ -85,15 +91,17 @@ $paises = $stmt->fetchAll();
                         <td><?= htmlspecialchars($p['moeda']) ?></td>
                         <td><?= htmlspecialchars($p['continente']) ?></td>
                         <td><?= htmlspecialchars($p['governante']) ?></td>
+                        <?php if ($isAdmin): ?>
                         <td>
                             <a href="editar.php?id=<?= $p['pk_pais'] ?>" class="btn-edit" title="Editar">✏️</a>
                             <a href="excluir.php?id=<?= $p['pk_pais'] ?>" class="btn-delete" title="Excluir" onclick="return confirmarExclusao('país')">🗑️</a>
                         </td>
+                        <?php endif; ?>
                     </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="11" style="text-align: center; padding: 30px; color: #7f8c8d;">
+                        <td colspan="<?= $isAdmin ? 11 : 10 ?>" style="text-align: center; padding: 30px; color: #7f8c8d;">
                             Nenhum país cadastrado
                         </td>
                     </tr>

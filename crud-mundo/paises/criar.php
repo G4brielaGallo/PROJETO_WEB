@@ -1,5 +1,6 @@
 <?php
-include '../config.php';
+include '../auth.php';
+exigirAdmin();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt = $pdo->prepare("INSERT INTO Paises (nome, populacao, area, idioma, clima, regime_politico, moeda, fk_governante, fk_continente) 

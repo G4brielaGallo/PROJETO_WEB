@@ -1,5 +1,6 @@
 <?php
-include '../config.php';
+include '../auth.php';
+exigirAdmin();
 $id = $_GET['id'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

@@ -1,5 +1,6 @@
 <?php
-include '../config.php';
+include '../auth.php';
+exigirAdmin();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {

@@ -1,4 +1,9 @@
-<?php include 'config.php'; ?>
+<?php
+require_once 'auth.php';
+exigirLogin();
+
+$isAdmin = ($_SESSION['tipo'] ?? '') === 'A';
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -9,8 +14,15 @@
 </head>
 <body>
     <div class="container fade-in">
-        <h1>🌍 Sistema de Gerenciamento Mundial</h1>
-        
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <h1 style="border-bottom:none; margin-bottom:0; padding-bottom:0;">🌍 Sistema de Gerenciamento Mundial</h1>
+            <div style="font-size:14px; color:#7f8c8d;">
+                Olá, <strong><?= htmlspecialchars($_SESSION['nome']) ?></strong>
+                &nbsp;|&nbsp; <a href="logout.php">Sair</a>
+            </div>
+        </div>
+        <div style="border-bottom: 3px solid #3498db; margin: 15px 0 25px;"></div>
+
         <?php
         // Buscar estatísticas
         try {
@@ -22,7 +34,7 @@
             $totalPaises = $totalCidades = $totalContinentes = $totalGovernantes = 0;
         }
         ?>
-        
+
         <!-- Estatísticas do Dashboard -->
         <div class="stats">
             <div class="stat-card">
@@ -42,7 +54,7 @@
                 <span class="label">Governantes</span>
             </div>
         </div>
-        
+
         <div class="menu">
             <!-- PAÍSES -->
             <div class="menu-card">
@@ -51,11 +63,13 @@
                     Listar Países
                     <span class="badge"><?= $totalPaises ?></span>
                 </a>
+                <?php if ($isAdmin): ?>
                 <a href="paises/criar.php" class="btn-create">
                     Criar País
                 </a>
+                <?php endif; ?>
             </div>
-            
+
             <!-- CIDADES -->
             <div class="menu-card">
                 <h2>Cidades</h2>
@@ -63,11 +77,13 @@
                     Listar Cidades
                     <span class="badge"><?= $totalCidades ?></span>
                 </a>
+                <?php if ($isAdmin): ?>
                 <a href="cidades/criar.php" class="btn-create">
                     Criar Cidade
                 </a>
+                <?php endif; ?>
             </div>
-            
+
             <!-- CONTINENTES -->
             <div class="menu-card">
                 <h2>Continentes</h2>
@@ -75,11 +91,13 @@
                     Listar Continentes
                     <span class="badge"><?= $totalContinentes ?></span>
                 </a>
+                <?php if ($isAdmin): ?>
                 <a href="continentes/criar.php" class="btn-create">
                     Criar Continente
                 </a>
+                <?php endif; ?>
             </div>
-            
+
             <!-- GOVERNANTES -->
             <div class="menu-card">
                 <h2>Governantes</h2>
@@ -87,12 +105,14 @@
                     Listar Governantes
                     <span class="badge"><?= $totalGovernantes ?></span>
                 </a>
+                <?php if ($isAdmin): ?>
                 <a href="governantes/criar.php" class="btn-create">
                     Criar Governante
                 </a>
+                <?php endif; ?>
             </div>
         </div>
-        
+
         <!-- Rodapé -->
         <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1; color: #7f8c8d; font-size: 14px;">
             <p>Sistema de Gerenciamento Mundial &copy; <?= date('Y') ?> - Todos os direitos reservados</p>

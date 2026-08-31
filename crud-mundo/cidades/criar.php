@@ -1,5 +1,6 @@
 <?php
-include '../config.php';
+include '../auth.php';
+exigirAdmin();
 
 // Buscar dados para os selects
 $paises = $pdo->query("SELECT pk_pais, nome FROM Paises ORDER BY nome")->fetchAll();

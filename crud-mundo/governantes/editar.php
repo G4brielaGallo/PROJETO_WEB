@@ -1,5 +1,6 @@
 <?php
-include '../config.php';
+include '../auth.php';
+exigirAdmin();
 
 $id = isset($_GET['id']) ? $_GET['id'] : 0;
 

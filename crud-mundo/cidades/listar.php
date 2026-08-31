@@ -1,6 +1,8 @@
 <?php
 include '../config.php';
 
+$isAdmin = ($_SESSION['tipo'] ?? '') === 'A';
+
 $stmt = $pdo->query("SELECT c.*, p.nome as pais, g.nome as governante 
                      FROM Cidades c 
                      JOIN Paises p ON c.fk_pais = p.pk_pais 
@@ -21,7 +23,9 @@ $cidades = $stmt->fetchAll();
         <h1>Lista de Cidades</h1>
         <div class="actions">
             <a href="../index.php" class="btn">Voltar</a>
+            <?php if ($isAdmin): ?>
             <a href="criar.php" class="btn btn-success">+ Nova Cidade</a>
+            <?php endif; ?>
         </div>
         
         <table>
@@ -35,7 +39,9 @@ $cidades = $stmt->fetchAll();
                     <th>Fundação</th>
                     <th>País</th>
                     <th>Governante</th>
+                    <?php if ($isAdmin): ?>
                     <th>Ações</th>
+                    <?php endif; ?>
                 </tr>
             </thead>
             <tbody>
@@ -50,15 +56,17 @@ $cidades = $stmt->fetchAll();
                         <td><?= $c['dt_fundacao'] ? date('d/m/Y', strtotime($c['dt_fundacao'])) : '-' ?></td>
                         <td><?= htmlspecialchars($c['pais']) ?></td>
                         <td><?= htmlspecialchars($c['governante']) ?></td>
+                        <?php if ($isAdmin): ?>
                         <td>
                             <a href="editar.php?id=<?= $c['pk_cidade'] ?>" class="btn-edit">✏️</a>
                             <a href="excluir.php?id=<?= $c['pk_cidade'] ?>" class="btn-delete" onclick="return confirmarExclusao('cidade')">🗑️</a>
                         </td>
+                        <?php endif; ?>
                     </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="9" style="text-align: center;">Nenhuma cidade cadastrada</td>
+                        <td colspan="<?= $isAdmin ? 9 : 8 ?>" style="text-align: center;">Nenhuma cidade cadastrada</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
