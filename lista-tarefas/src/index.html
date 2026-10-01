@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilos.css">
+    <title>Lista de Tarefas</title>
+</head>
+<body>
+    <div class="container">
+        <p id="titulo">Lista de Tarefas</p>
+    
+        <div class="card-form">
+            <label class="label">Digite a tarefa:</label>
+            <input type="text" id="inputTarefa" placeholder="Nome da tarefa...">
+
+            <label class="label">Digite o prazo:</label>
+            <input type="date" id="inputData">
+
+            <label class="label">Digite a descrição</label>
+            <input type="text" id="inputDesc" placeholder="Descrição da tarefa...">
+
+            <button id="botaoAdicionarTarefa" onclick="adicionarTarefa()">ADICIONAR</button>
+        </div>
+
+        <div class="tarefasHeader">
+            <p id="listaTitulo">TAREFAS</p>
+            <p id="tarefasContador">Total de tarefas: 0</p>
+        </div>
+
+        <div class="tarefasLista">
+        </div>
+    </div>
+
+    <script src="js/tarefas.js"></script>
+</body>
+</html>

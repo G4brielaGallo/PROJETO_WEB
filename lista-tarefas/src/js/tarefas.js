@@ -1,0 +1,104 @@
+let hoje = new Date().toISOString().split("T")[0]
+let cont = 0;
+
+function adicionarContador() {
+    cont++;
+}
+
+function atualizarContador() {
+    document.getElementById("tarefasContador").innerHTML = "Total de tarefas: " + cont;
+}
+
+function limparInputs() {
+    document.getElementById("inputTarefa").value = "";
+    document.getElementById("inputData").value = "";
+    document.getElementById("inputDesc").value = "";
+}
+
+function adicionarTarefa() {
+    //Pega o valor digitado nos inputs
+    let tarefa = document.getElementById("inputTarefa").value;
+    let data = document.getElementById("inputData").value;
+    let texto = document.getElementById("inputDesc").value;
+
+    //Verifica se os valores são válidos
+    if (tarefa == "" || data == "" || texto == ""){
+        alert("Algum dos campos ficou em branco, por favor o preencha e tente adicionar a tarefa novamente!");
+        return;
+    }
+
+    if (texto.trim().length < 3){
+        alert("A sua descrição tem menos de 3 caracteres, por favor digite 3 ou mais caracteres no campo descrição e tente adicionar a tarefa novamente!");
+        return;
+    }
+
+    if (hoje > data){
+        alert("A data digitada antecede a " + hoje + ", digite a data de hoje ou a de um dia posterior!");
+        return;
+    }
+
+    //Cria os elementos
+    let divTarefa = document.createElement("div");
+    divTarefa.className = "cardTarefa";
+
+    let nomeTarefa = document.createElement("p");
+    nomeTarefa.innerHTML = tarefa;
+    nomeTarefa.className = "nomeTarefa"
+
+    let botaoRemover = document.createElement("button");
+    botaoRemover.innerHTML = "REMOVER";
+    botaoRemover.className = "btnRemover";
+    botaoRemover.onclick = function removerTarefa() {
+        divTarefa.remove();
+        cont--;
+        atualizarContador();
+    }
+
+    let botaoConcluir = document.createElement("button");
+    botaoConcluir.innerHTML = "CONCLUIR";
+    botaoConcluir.className = "btnConcluir";
+    botaoConcluir.onclick = function concluirTarefa() {
+        divTarefa.style.backgroundColor = "#0f0e0c";
+        nomeTarefa.style.textDecoration = "line-through"
+        botaoConcluir.disabled = true;
+        botaoReabrir.disabled = false;
+    }
+
+    let botaoReabrir = document.createElement("button");
+    botaoReabrir.innerHTML = "REABRIR";
+    botaoReabrir.className = "btnReabrir";
+    botaoReabrir.disabled = true;
+    botaoReabrir.onclick = function reabrirTarefa() {
+        divTarefa.style.backgroundColor = "#222018";
+        nomeTarefa.style.textDecoration = "none";
+        botaoConcluir.disabled = false;
+        botaoReabrir.disabled = true;
+    }
+
+    let dataTarefa = document.createElement("p");
+    dataTarefa.innerHTML = data;
+    dataTarefa.className = "dataTarefa"
+
+
+    let descTarefa = document.createElement("p");
+    descTarefa.innerHTML = texto;
+    descTarefa.className = "descTarefa"
+
+    let tarefasLista = document.querySelector(".tarefasLista");
+
+    tarefasLista.appendChild(divTarefa);
+
+    divTarefa.appendChild(nomeTarefa);
+    divTarefa.appendChild(dataTarefa);
+    divTarefa.appendChild(descTarefa);
+    divTarefa.appendChild(botaoConcluir);
+    divTarefa.appendChild(botaoRemover);
+    divTarefa.appendChild(botaoReabrir);
+
+    //Realiza a contagem de tarefas
+    adicionarContador();
+    atualizarContador();
+
+    //Limpa os inputs
+    limparInputs();
+}
