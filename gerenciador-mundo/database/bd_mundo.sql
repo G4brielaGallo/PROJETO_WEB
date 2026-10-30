@@ -42,6 +42,8 @@ CREATE TABLE Cidades(
     area INT NOT NULL,
     clima VARCHAR(90) NOT NULL,
     dt_fundacao DATE,
+    latitude DECIMAL(10,7) NULL,   -- usada pela API do Google Maps
+    longitude DECIMAL(10,7) NULL,  -- usada pela API do Google Maps
     fk_governante INT NOT NULL,
     fk_pais INT NOT NULL,
     FOREIGN KEY (fk_governante) REFERENCES Governantes(pk_governante),
@@ -100,19 +102,19 @@ VALUES
 ('Alemanha', 84000000, 357588.00, 'Alemão', 'Temperado', 'República Parlamentarista', 'Euro', 10, 5);
 
 INSERT INTO Cidades
-(nome, populacao, area, clima, dt_fundacao, fk_governante, fk_pais)
+(nome, populacao, area, clima, dt_fundacao, latitude, longitude, fk_governante, fk_pais)
 VALUES
-('São Paulo', 11450000, 1521, 'Tropical', '1554-01-25', 6, 1),
-('Rio de Janeiro', 6211000, 1200, 'Tropical', '1565-03-01', 6, 1),
-('Brasília', 3094000, 5760, 'Tropical de Altitude', '1960-04-21', 6, 1),
-('Nova York', 8800000, 783, 'Temperado', '1624-01-01', 2, 2),
-('Los Angeles', 3900000, 1302, 'Mediterrâneo', '1781-09-04', 2, 2),
-('Pretória', 820000, 687, 'Subtropical', '1855-11-16', 3, 3),
-('Cidade do Cabo', 4900000, 2461, 'Mediterrâneo', '1652-04-06', 3, 3),
-('Tóquio', 14000000, 2194, 'Temperado', '1603-01-01', 7, 4),
-('Osaka', 2750000, 225, 'Temperado', '1889-04-01', 7, 4),
-('Berlim', 3800000, 892, 'Temperado', '1237-01-01', 10, 5),
-('Munique', 1500000, 310, 'Temperado', '1158-06-14', 10, 5);
+('São Paulo', 11450000, 1521, 'Tropical', '1554-01-25', -23.5505000, -46.6333000, 6, 1),
+('Rio de Janeiro', 6211000, 1200, 'Tropical', '1565-03-01', -22.9068000, -43.1729000, 6, 1),
+('Brasília', 3094000, 5760, 'Tropical de Altitude', '1960-04-21', -15.7939000, -47.8828000, 6, 1),
+('Nova York', 8800000, 783, 'Temperado', '1624-01-01', 40.7128000, -74.0060000, 2, 2),
+('Los Angeles', 3900000, 1302, 'Mediterrâneo', '1781-09-04', 34.0522000, -118.2437000, 2, 2),
+('Pretória', 820000, 687, 'Subtropical', '1855-11-16', -25.7479000, 28.2293000, 3, 3),
+('Cidade do Cabo', 4900000, 2461, 'Mediterrâneo', '1652-04-06', -33.9249000, 18.4241000, 3, 3),
+('Tóquio', 14000000, 2194, 'Temperado', '1603-01-01', 35.6762000, 139.6503000, 7, 4),
+('Osaka', 2750000, 225, 'Temperado', '1889-04-01', 34.6937000, 135.5023000, 7, 4),
+('Berlim', 3800000, 892, 'Temperado', '1237-01-01', 52.5200000, 13.4050000, 10, 5),
+('Munique', 1500000, 310, 'Temperado', '1158-06-14', 48.1351000, 11.5820000, 10, 5);
 
 INSERT INTO Usuarios
 (pk_username, senha, nome, status, tipo, qtd_acesso)

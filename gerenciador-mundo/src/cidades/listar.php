@@ -1,5 +1,6 @@
 <?php
-include '../config.php';
+include '../auth.php';
+exigirLogin();
 
 $isAdmin = ($_SESSION['tipo'] ?? '') === 'A';
 
@@ -23,6 +24,7 @@ $cidades = $stmt->fetchAll();
         <h1>Lista de Cidades</h1>
         <div class="actions">
             <a href="../index.php" class="btn">Voltar</a>
+            <a href="../mapa.php" class="btn">🗺️ Mapa geral</a>
             <?php if ($isAdmin): ?>
             <a href="criar.php" class="btn btn-success">+ Nova Cidade</a>
             <?php endif; ?>
@@ -39,6 +41,7 @@ $cidades = $stmt->fetchAll();
                     <th>Fundação</th>
                     <th>País</th>
                     <th>Governante</th>
+                    <th>Mapa</th>
                     <?php if ($isAdmin): ?>
                     <th>Ações</th>
                     <?php endif; ?>
@@ -56,6 +59,13 @@ $cidades = $stmt->fetchAll();
                         <td><?= $c['dt_fundacao'] ? date('d/m/Y', strtotime($c['dt_fundacao'])) : '-' ?></td>
                         <td><?= htmlspecialchars($c['pais']) ?></td>
                         <td><?= htmlspecialchars($c['governante']) ?></td>
+                        <td>
+                            <?php if ($c['latitude'] !== null && $c['longitude'] !== null): ?>
+                                <a href="../mapa.php?id=<?= (int)$c['pk_cidade'] ?>" class="btn-map" title="Ver no mapa">🗺️</a>
+                            <?php else: ?>
+                                -
+                            <?php endif; ?>
+                        </td>
                         <?php if ($isAdmin): ?>
                         <td>
                             <a href="editar.php?id=<?= $c['pk_cidade'] ?>" class="btn-edit">✏️</a>
@@ -66,7 +76,7 @@ $cidades = $stmt->fetchAll();
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="<?= $isAdmin ? 9 : 8 ?>" style="text-align: center;">Nenhuma cidade cadastrada</td>
+                        <td colspan="<?= $isAdmin ? 10 : 9 ?>" style="text-align: center;">Nenhuma cidade cadastrada</td>
                     </tr>
                 <?php endif; ?>
             </tbody>

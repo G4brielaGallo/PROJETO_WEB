@@ -614,3 +614,23 @@ form {
     visibility: visible;
     opacity: 1;
 }
+
+/* Mapa (Google Maps) */
+#mapa {
+    width: 100%;
+    height: 500px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-map {
+    text-decoration: none;
+    font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    #mapa {
+        height: 350px;
+    }
+}

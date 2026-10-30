@@ -82,6 +82,9 @@ $isAdmin = ($_SESSION['tipo'] ?? '') === 'A';
                     Criar Cidade
                 </a>
                 <?php endif; ?>
+                <a href="mapa.php" class="btn-list">
+                    🗺️ Mapa das Cidades
+                </a>
             </div>
 
             <!-- CONTINENTES -->

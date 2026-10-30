@@ -7,9 +7,21 @@ $paises = $pdo->query("SELECT pk_pais, nome FROM Paises ORDER BY nome")->fetchAl
 $governantes = $pdo->query("SELECT pk_governante, nome FROM Governantes ORDER BY nome")->fetchAll();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Coordenadas (opcionais, mas devem ser informadas em par)
+    $latitude  = ($_POST['latitude']  ?? '') !== '' ? (float)$_POST['latitude']  : null;
+    $longitude = ($_POST['longitude'] ?? '') !== '' ? (float)$_POST['longitude'] : null;
+
+    if (($latitude === null) !== ($longitude === null)) {
+        $erro = 'Informe latitude e longitude juntas, ou deixe ambas em branco.';
+    } elseif ($latitude !== null && (abs($latitude) > 90 || abs($longitude) > 180)) {
+        $erro = 'Coordenadas inválidas: latitude deve estar entre -90 e 90 e longitude entre -180 e 180.';
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($erro)) {
     try {
-        $stmt = $pdo->prepare("INSERT INTO Cidades (nome, populacao, area, clima, dt_fundacao, fk_governante, fk_pais) 
-                               VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO Cidades (nome, populacao, area, clima, dt_fundacao, latitude, longitude, fk_governante, fk_pais) 
+                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         
         $dt_fundacao = !empty($_POST['dt_fundacao']) ? $_POST['dt_fundacao'] : null;
         
@@ -19,6 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST['area'],
             $_POST['clima'],
             $dt_fundacao,
+            $latitude,
+            $longitude,
             $_POST['fk_governante'],
             $_POST['fk_pais']
         ]);
@@ -70,6 +84,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="form-group">
                 <label for="dt_fundacao">Data de Fundação</label>
                 <input type="date" id="dt_fundacao" name="dt_fundacao">
+            </div>
+
+            <div class="form-group">
+                <label for="latitude">Latitude</label>
+                <input type="number" id="latitude" name="latitude" step="any" min="-90" max="90" placeholder="Ex: -23.5505">
+                <span class="help-text">Opcional. Necessária para exibir a cidade no mapa.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="longitude">Longitude</label>
+                <input type="number" id="longitude" name="longitude" step="any" min="-180" max="180" placeholder="Ex: -46.6333">
             </div>
             
             <div class="form-group">
