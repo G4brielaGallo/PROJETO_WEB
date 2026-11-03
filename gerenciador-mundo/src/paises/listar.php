@@ -1,5 +1,6 @@
 <?php
-include '../config.php';
+include '../auth.php';
+exigirLogin();
 
 $isAdmin = ($_SESSION['tipo'] ?? '') === 'A';
 
@@ -7,7 +8,7 @@ $isAdmin = ($_SESSION['tipo'] ?? '') === 'A';
 $stmt = $pdo->query("SELECT p.*, c.nome as continente, g.nome as governante 
                      FROM Paises p 
                      JOIN Continentes c ON p.fk_continente = c.pk_continente 
-                     JOIN Governantes g ON p.fk_governante = g.pk_governante
+                     LEFT JOIN Governantes g ON p.fk_governante = g.pk_governante
                      ORDER BY p.nome");
 $paises = $stmt->fetchAll();
 ?>
@@ -27,6 +28,7 @@ $paises = $stmt->fetchAll();
             <a href="../index.php" class="btn">Voltar</a>
             <?php if ($isAdmin): ?>
             <a href="criar.php" class="btn btn-success">+ Novo País</a>
+            <a href="importar.php" class="btn btn-success">🌐 Importar da API</a>
             <?php endif; ?>
         </div>
         
@@ -64,6 +66,8 @@ $paises = $stmt->fetchAll();
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
+                    <th>ISO</th>
+                    <th>Capital</th>
                     <th>População</th>
                     <th>Área (km²)</th>
                     <th>Idioma</th>
@@ -71,6 +75,7 @@ $paises = $stmt->fetchAll();
                     <th>Regime</th>
                     <th>Moeda</th>
                     <th>Continente</th>
+                    <th>Sub-região</th>
                     <th>Governante</th>
                     <?php if ($isAdmin): ?>
                     <th>Ações</th>
@@ -83,14 +88,17 @@ $paises = $stmt->fetchAll();
                     <tr>
                         <td><?= $p['pk_pais'] ?></td>
                         <td><strong><?= htmlspecialchars($p['nome']) ?></strong></td>
+                        <td><?= htmlspecialchars($p['codigo_iso'] ?? '-') ?></td>
+                        <td><?= htmlspecialchars($p['capital'] ?? '-') ?></td>
                         <td><?= number_format($p['populacao'], 0, ',', '.') ?></td>
-                        <td><?= number_format($p['area'], 2, ',', '.') ?></td>
-                        <td><?= htmlspecialchars($p['idioma']) ?></td>
-                        <td><?= htmlspecialchars($p['clima']) ?></td>
-                        <td><?= htmlspecialchars($p['regime_politico']) ?></td>
-                        <td><?= htmlspecialchars($p['moeda']) ?></td>
+                        <td><?= $p['area'] !== null ? number_format($p['area'], 2, ',', '.') : '-' ?></td>
+                        <td><?= htmlspecialchars($p['idioma'] ?? '-') ?></td>
+                        <td><?= htmlspecialchars($p['clima'] ?? '-') ?></td>
+                        <td><?= htmlspecialchars($p['regime_politico'] ?? '-') ?></td>
+                        <td><?= htmlspecialchars($p['moeda'] ?? '-') ?></td>
                         <td><?= htmlspecialchars($p['continente']) ?></td>
-                        <td><?= htmlspecialchars($p['governante']) ?></td>
+                        <td><?= htmlspecialchars($p['sub_regiao'] ?? '-') ?></td>
+                        <td><?= htmlspecialchars($p['governante'] ?? '-') ?></td>
                         <?php if ($isAdmin): ?>
                         <td>
                             <a href="editar.php?id=<?= $p['pk_pais'] ?>" class="btn-edit" title="Editar">✏️</a>
@@ -101,7 +109,7 @@ $paises = $stmt->fetchAll();
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="<?= $isAdmin ? 11 : 10 ?>" style="text-align: center; padding: 30px; color: #7f8c8d;">
+                        <td colspan="<?= $isAdmin ? 14 : 13 ?>" style="text-align: center; padding: 30px; color: #7f8c8d;">
                             Nenhum país cadastrado
                         </td>
                     </tr>

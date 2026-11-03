@@ -67,6 +67,9 @@ $isAdmin = ($_SESSION['tipo'] ?? '') === 'A';
                 <a href="paises/criar.php" class="btn-create">
                     Criar País
                 </a>
+                <a href="paises/importar.php" class="btn-create">
+                    🌐 Importar País (API)
+                </a>
                 <?php endif; ?>
             </div>
 

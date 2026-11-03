@@ -23,13 +23,17 @@ CREATE TABLE Continentes(
 CREATE TABLE Paises(
 	pk_pais INT PRIMARY KEY AUTO_INCREMENT,
 	nome VARCHAR(90) NOT NULL UNIQUE,
+    codigo_iso CHAR(2) NULL UNIQUE,        -- alpha-2 (REST Countries); identificador externo
+    capital VARCHAR(100) NULL,             -- REST Countries
+    sub_regiao VARCHAR(100) NULL,          -- REST Countries
     populacao BIGINT NOT NULL,
-    area DECIMAL(15,2) NOT NULL,
-    idioma VARCHAR(45) NOT NULL,
-    clima VARCHAR(90) NOT NULL,
-    regime_politico VARCHAR(90) NOT NULL,
-    moeda VARCHAR(45) NOT NULL,
-    fk_governante INT NOT NULL,
+    -- Campos abaixo não vêm da REST Countries: aceitam NULL para países importados
+    area DECIMAL(15,2) NULL,
+    idioma VARCHAR(45) NULL,
+    clima VARCHAR(90) NULL,
+    regime_politico VARCHAR(90) NULL,
+    moeda VARCHAR(45) NULL,
+    fk_governante INT NULL,
     fk_continente INT NOT NULL,
     FOREIGN KEY (fk_governante) REFERENCES Governantes(pk_governante),
     FOREIGN KEY (fk_continente) REFERENCES Continentes(pk_continente)
@@ -93,13 +97,13 @@ VALUES ("Donald John Trump", "Partido Republicano", '1946-06-14', 80, '2017-01-2
 ('Friedrich Merz', 'União Democrata Cristã', '1955-11-11', 71, '2025-05-06', '2029-05-06');
 
 INSERT INTO Paises
-(nome, populacao, area, idioma, clima, regime_politico, moeda, fk_governante, fk_continente)
+(nome, codigo_iso, capital, sub_regiao, populacao, area, idioma, clima, regime_politico, moeda, fk_governante, fk_continente)
 VALUES
-('Brasil', 203000000, 8515767.00, 'Português', 'Tropical', 'República Presidencialista', 'Real', 6, 3),
-('Estados Unidos', 340000000, 9833520.00, 'Inglês', 'Temperado', 'República Presidencialista', 'Dólar Americano', 2, 3),
-('África do Sul', 62000000, 1221037.00, 'Zulu e outros', 'Subtropical', 'República Parlamentarista', 'Rand', 3, 2),
-('Japão', 124000000, 377975.00, 'Japonês', 'Temperado', 'Monarquia Constitucional', 'Iene', 7, 1),
-('Alemanha', 84000000, 357588.00, 'Alemão', 'Temperado', 'República Parlamentarista', 'Euro', 10, 5);
+('Brasil', 'BR', 'Brasília', 'South America', 203000000, 8515767.00, 'Português', 'Tropical', 'República Presidencialista', 'Real', 6, 3),
+('Estados Unidos', 'US', 'Washington, D.C.', 'Northern America', 340000000, 9833520.00, 'Inglês', 'Temperado', 'República Presidencialista', 'Dólar Americano', 2, 3),
+('África do Sul', 'ZA', 'Pretória', 'Southern Africa', 62000000, 1221037.00, 'Zulu e outros', 'Subtropical', 'República Parlamentarista', 'Rand', 3, 2),
+('Japão', 'JP', 'Tóquio', 'Eastern Asia', 124000000, 377975.00, 'Japonês', 'Temperado', 'Monarquia Constitucional', 'Iene', 7, 1),
+('Alemanha', 'DE', 'Berlim', 'Western Europe', 84000000, 357588.00, 'Alemão', 'Temperado', 'República Parlamentarista', 'Euro', 10, 5);
 
 INSERT INTO Cidades
 (nome, populacao, area, clima, dt_fundacao, latitude, longitude, fk_governante, fk_pais)
